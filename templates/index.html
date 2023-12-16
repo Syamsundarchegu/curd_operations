@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: hidden;
+        background-color: #3f51b5;
+        color: white;
+    }
+
+    h1, h2 {
+        color: #ff9800;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 120rem;
+        margin: 0 auto;
+        background-color: #673ab7;
+        height: 100vh;
+        gap: 2.5rem;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    input {
+        margin-bottom: 1.6rem;
+        height: 2rem;
+        padding: 0.5rem;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-top: 1.5rem;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 10px;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #9575cd;
+    }
+
+    .form-1 {
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+    }
+
+    label {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    button {
+        padding: 1rem 2rem;
+        border-radius: 9px;
+        border: none;
+        background-color: #ff9800;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 700;
+        cursor: pointer;
+        width: 50%;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #f57c00;
+    }
+
+    @media (max-width: 23.5rem) {
+        .grid {
+            grid-template-columns: 1fr;
+            padding: 0 1rem;
+        }
+    }
+
+    .edit, .delete, .search {
+        text-decoration: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9px;
+        margin: 0.5rem;
+        transition: background-color 0.3s ease;
+        display: block;
+    }
+
+    .edit:hover, .search:hover {
+        background-color: #2196f3;
+    }
+
+    .delete:hover {
+        background-color: #e57373;
+    }
+
+    .search {
+        display: inline-block;
+        margin-top: 1rem;
+        font-size: 1.3rem;
+        color: white;
+        text-decoration: none;
+        background-color: #4caf50;
+        padding: 1rem 2rem;
+        border-radius: 9px;
+        transition: background-color 0.3s ease;
+    }
+
+    .search:hover {
+        background-color: #388e3c;
+        margin-top: 0;
+    }
+</style>
+<body>
+    <section class="grid col-2">
+        <div class="u">
+            <h1>User List</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.mobile }}</td>
+                            <td><a href="{{ url_for('edit_user', user_id=user.id) }}" class="edit">Edit</a></td>
+                            <td><a href="{{ url_for('delete_user', user_id=user.id) }}" class="delete">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{url_for('search')}}" class="search">Search_user</a>
+        </div>
+        <div class="user-details">
+            <h2>Add New User</h2>
+            <form action="/add" method="post" class="form-1">
+                <label for="name">Name:</label>
+                <input type="text" name="name" required>
+                <label for="mobile">Mobile:</label>
+                <input type="text" name="mobile" required>
+                <div class="btn">
+                    <button type="submit">Add User</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
